@@ -1,56 +1,88 @@
-"use client";
-
-import { FunnelNodeData } from "@/lib/types";
+import React from "react";
 import { Handle, Position, type NodeProps } from "reactflow";
+import type { FunnelNodeData } from "@/lib/types";
 
-export default function FunnelNode({ data }: NodeProps<FunnelNodeData>) {
-  const border = data.hasWarning ? "2px solid #ef4444" : "1px solid #d1d5db";
+const handleCommon: React.CSSProperties = {
+  background: "#ffffff",
+  border: "1px solid rgba(17, 24, 39, 0.16)",
+  borderRadius: 999,
+};
 
+function kindBadge(kind: FunnelNodeData["kind"]) {
+  switch (kind) {
+    case "sales":
+      return "S";
+    case "order":
+      return "O";
+    case "upsell":
+      return "U";
+    case "downsell":
+      return "D";
+    case "thankyou":
+      return "T";
+  }
+}
+
+export default function FunnelNode({ data, selected }: NodeProps<FunnelNodeData>) {
   return (
     <div
       role="group"
       aria-label={`${data.title} node`}
-      style={{
-        width: 220,
-        border,
-        borderRadius: 12,
-        background: "white",
-        padding: 12,
-        boxShadow: "0 1px 8px rgba(0,0,0,0.08)",
-      }}
+      className={`funnel-node ${selected ? "is-selected" : ""} ${
+        data.hasWarning ? "has-warning" : ""
+      }`}
     >
-      <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-        <div aria-hidden style={{
-          width: 32, height: 32, borderRadius: 8, background: "#f3f4f6",
-          display: "grid", placeItems: "center", fontSize: 14
-        }}>
-          ⬤
+      <Handle
+        type="target"
+        position={Position.Left}
+        aria-label="Incoming connection handle"
+        style={{
+          ...handleCommon,
+          width: 12,
+          height: 12,
+          left: -6,
+          top: "50%",
+          transform: "translateY(-50%)",
+        }}
+      />
+
+      <Handle
+        type="source"
+        position={Position.Right}
+        aria-label="Outgoing connection handle"
+        style={{
+          ...handleCommon,
+          width: 12,
+          height: 12,
+          right: -6,
+          top: "50%",
+          transform: "translateY(-50%)",
+        }}
+      />
+
+      <div className="funnel-node__header">
+        <div className="funnel-node__badge" aria-hidden="true">
+          {kindBadge(data.kind)}
         </div>
-        <div style={{ fontWeight: 700 }}>{data.title}</div>
+        <div className="funnel-node__title" title={data.title}>
+          {data.title}
+        </div>
       </div>
 
-      <div style={{ marginTop: 10 }}>
-        <button
-          type="button"
-          style={{
-            width: "100%",
-            padding: "8px 10px",
-            borderRadius: 10,
-            border: "1px solid #e5e7eb",
-            background: "#111827",
-            color: "white",
-            fontWeight: 600,
-            cursor: "default",
-          }}
-          aria-label={`${data.title} primary action`}
-        >
-          {data.primaryCta}
-        </button>
-      </div>
+      <button
+  type="button"
+  className="funnel-node__cta nodrag"
+  aria-label={`${data.primaryCta} (preview button)`}
+  onClick={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // intentionally does nothing (preview)
+  }}
+  onMouseDown={(e) => e.stopPropagation()} // prevents node drag starting when pressing button
+>
+  {data.primaryCta}
+</button>
 
-      {/* connection handles */}
-      <Handle type="target" position={Position.Left} aria-label="Incoming connector" />
-      <Handle type="source" position={Position.Right} aria-label="Outgoing connector" />
     </div>
   );
 }

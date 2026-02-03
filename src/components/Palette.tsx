@@ -25,6 +25,8 @@ export default function Palette() {
             draggable
             onDragStart={(e) => {
               e.dataTransfer.setData("application/funnel-node", item.kind);
+              // React Flow conventional mime (kept in addition for compatibility)
+              e.dataTransfer.setData("application/reactflow", item.kind);
               e.dataTransfer.effectAllowed = "move";
             }}
             role="button"

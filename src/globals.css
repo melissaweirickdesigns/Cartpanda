@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* --- Funnel builder UI polish (minimal + sleek) --- */
+
+.react-flow__attribution {
+  display: none;
+}
+
+.funnel-node {
+  width: 220px;
+  padding: 12px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 6px 18px rgba(0,0,0,0.04);
+  transition: box-shadow 120ms ease, border-color 120ms ease, transform 120ms ease;
+}
+
+.funnel-node:hover {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 10px 26px rgba(0,0,0,0.06);
+}
+
+.funnel-node.is-selected {
+  border-color: rgba(17, 24, 39, 0.18);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 14px 34px rgba(0,0,0,0.08);
+}
+
+.funnel-node.has-warning {
+  border-color: rgba(239, 68, 68, 0.55);
+}
+
+.funnel-node__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.funnel-node__badge {
+  height: 22px;
+  width: 22px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.75);
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: rgba(17, 24, 39, 0.03);
+}
+
+.funnel-node__title {
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 750;
+  color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.funnel-node__thumb {
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: linear-gradient(180deg, rgba(17,24,39,0.03), rgba(17,24,39,0.02));
+}
+
+.funnel-node__cta {
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: #111827;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 10px;
+  cursor: pointer;
+pointer-events: auto;
+}
+
+.funnel-node__hint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: rgba(107, 114, 128, 0.95);
+}
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
