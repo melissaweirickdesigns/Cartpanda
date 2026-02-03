@@ -1,8 +1,7 @@
 "use client";
 
+import { FunnelNodeData } from "@/lib/types";
 import { Handle, Position, type NodeProps } from "reactflow";
-import { FunnelNodeData } from "../../../lib/types";
-
 
 export default function FunnelNode({ data }: NodeProps<FunnelNodeData>) {
   const border = data.hasWarning ? "2px solid #ef4444" : "1px solid #d1d5db";

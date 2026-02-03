@@ -193,6 +193,7 @@ const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
           <div ref={wrapperRef} style={{ flex: 1 }}>
             <ReactFlow
               nodes={nodes}
+              nodeTypes={nodeTypes}
               edges={edges}
               onInit={setRf}
               onNodesChange={onNodesChange}

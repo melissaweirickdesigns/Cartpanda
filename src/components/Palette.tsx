@@ -1,6 +1,6 @@
 "use client";
 
-import { NodeKind } from "../../lib/types";
+import { NodeKind } from "@/lib/types";
 
 const ITEMS: { kind: NodeKind; label: string }[] = [
   { kind: "sales", label: "Sales Page" },
