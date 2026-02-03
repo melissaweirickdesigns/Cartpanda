@@ -1,7 +1,7 @@
 # Upsell Funnel Builder (Front-end Practical Test)
 
-Live demo: **<PUBLIC_DEMO_URL>** (no login)  
-Repo: **<GITHUB_REPO_URL>**
+Live demo: https://cartpanda.onrender.com/ (no login)  
+Repo: (https://github.com/melissaweirickdesigns/Cartpanda)
 
 This project implements a **visual-only** upsell funnel builder: drag node types from a palette onto a canvas, move them, connect them with directional edges, and export/import the funnel state as JSON. :contentReference[oaicite:3]{index=3}
 

@@ -47,7 +47,7 @@ export default function FunnelBuilder() {
   const [rf, setRf] = useState<ReactFlowInstance | null>(null);
 
   const [counters, setCounters] = useState<Record<NodeKind, number>>(DEFAULT_COUNTERS);
-const [nodes, setNodes, onNodesChange] = useNodesState<Node<FunnelNodeData>>([]);
+const [nodes, setNodes, onNodesChange] = useNodesState<FunnelNodeData>([]);
 const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [warnings, setWarnings] = useState<Map<string, string[]>>(new Map());
 
