@@ -1,50 +1,56 @@
-# Upsell Funnel Builder (Front-end Practical Test)
+# Upsell Funnel Builder
 
-Live demo: https://cartpanda.onrender.com/ (no login)  
-Repo: (https://github.com/melissaweirickdesigns/Cartpanda)
+A **visual-only** upsell funnel builder built with **Next.js (App Router)** + **React Flow**.
 
-This project implements a **visual-only** upsell funnel builder: drag node types from a palette onto a canvas, move them, connect them with directional edges, and export/import the funnel state as JSON. :contentReference[oaicite:3]{index=3}
+- Drag node types from the left **Palette** onto the canvas
+- Move nodes, connect them with **directional edges**
+- Funnel state **persists to localStorage**
+- **Export** / **Import** the funnel as JSON
 
----
+## Live Demo / Repo
 
-## Features (Part 1)
+- Live demo: https://cartpanda.onrender.com/
+- Repo: https://github.com/melissaweirickdesigns/Cartpanda
 
-**Core (MVP)**
-- Infinite-ish canvas feel (pan), draggable nodes :contentReference[oaicite:4]{index=4}  
-- Node templates: Sales Page, Order Page, Upsell, Downsell, Thank You :contentReference[oaicite:5]{index=5}  
-- Nodes show: title, icon/thumbnail placeholder, and a static primary button label :contentReference[oaicite:6]{index=6}  
-- Add nodes by dragging from a left “Palette” sidebar :contentReference[oaicite:7]{index=7}  
-- Connect nodes with arrows/edges (direction shown) :contentReference[oaicite:8]{index=8}  
-- Basic funnel rules:
-  - “Thank You” has **no outgoing** edges (blocked) :contentReference[oaicite:9]{index=9}  
-  - “Sales Page” should have **one outgoing** edge — allow editing but show a **visual warning** if invalid :contentReference[oaicite:10]{index=10}  
-  - Upsell/Downsell labels auto-increment (e.g., “Upsell 1”, “Upsell 2”) :contentReference[oaicite:11]{index=11}  
-- Persistence:
-  - Save/load state via `localStorage` :contentReference[oaicite:12]{index=12}  
-  - Export JSON / Import JSON buttons :contentReference[oaicite:13]{index=13}  
+## Features
 
-**Nice-to-have implemented (optional)**
-- <Mini-map / zoom / snap-to-grid / deletion / validation panel / undo-redo> :contentReference[oaicite:14]{index=14}  
+### Core interactions
 
----
+- **Drag & drop node creation** from the Palette (Sales, Order, Upsell, Downsell, Thank You)
+- **Draggable nodes** on a pannable canvas (pan on scroll)
+- **Connect nodes** with directional arrows (smoothstep edges + arrow marker)
+- **Selection + deletion**
+  - Click to select nodes/edges
+  - Press **Delete** / **Backspace** to remove selected nodes/edges
+- **Undo / Redo**
+  - **Undo:** Ctrl/Cmd + Z
+  - **Redo:** Ctrl/Cmd + Shift + Z
 
-## Tech Stack
+### Validation rules
 
-- **Next.js (App Router) + React + TypeScript**
-- Graph/canvas: **React Flow**
-- Styling: **Tailwind CSS** (or CSS Modules)
-- Lint/format: **ESLint + Prettier**
+Validation is intentionally *visual* (warnings) except for one hard rule:
 
-> Suggested libraries included React + TypeScript + a graph library like React Flow; styling approach is flexible. :contentReference[oaicite:15]{index=15}
+- **Thank You** nodes: **no outgoing edges** (blocked at connection time)
+- **Sales Page** nodes: should have **exactly 1 outgoing** edge (warning if not)
+- **Orphan nodes** (no incoming + no outgoing): warning (bonus)
 
----
+Warnings show in two places:
 
-## Getting Started (Local)
+- A **red outline** on the node
+- A **Validation** panel on the right listing the messages
 
-### Requirements
-- Node.js >= <VERSION>
-- pnpm/npm/yarn (examples use npm)
+### Persistence + import/export
 
-### Install
-```bash
-npm install
+- Auto-saves to `localStorage` under the key `cp_funnel_builder_v1`
+- **Export JSON** downloads a `funnel.json` file
+- **Import JSON** loads a previously exported file
+
+The exported shape is versioned:
+
+```ts
+type FunnelExport = {
+  version: 1;
+  nodes: Node<FunnelNodeData>[];
+  edges: Edge[];
+  counters: Record<NodeKind, number>;
+};
